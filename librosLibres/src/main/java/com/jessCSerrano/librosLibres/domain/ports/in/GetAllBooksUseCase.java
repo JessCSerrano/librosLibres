@@ -1,0 +1,17 @@
+package com.jessCSerrano.librosLibres.domain.ports.in;
+
+import com.jessCSerrano.librosLibres.domain.model.book.Book;
+
+import java.util.List;
+
+/**
+ * Use case: Get all the book catalog from the bookstore.
+ * Description: Allows customers to retrieve the list of all books available in the bookstore.
+ * Business rule: Sort alphabetically.
+ * Inputs: None.
+ * Outputs: A list of the titles of the books in the bookstore.
+ */
+public interface GetAllBooksUseCase {
+
+    List<Book> getAllBooks();
+}

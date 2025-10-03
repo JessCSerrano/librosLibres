@@ -1,9 +1,11 @@
-package com.jessCSerrano.librosLibres.domain.model.book;
+package com.jessCSerrano.librosLibres.adapters.persistence.entity.book;
 
-import com.jessCSerrano.librosLibres.domain.model.author.Author;
+import com.jessCSerrano.librosLibres.adapters.persistence.entity.author.AuthorEntity;
+import com.jessCSerrano.librosLibres.domain.model.book.Genre;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -11,16 +13,17 @@ import java.util.UUID;
  */
 @Entity
 @Data
-public class Book {
+public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private Author author;
+    private AuthorEntity authorEntity;
     private String title;
     private String editorial;
     @Enumerated(value = EnumType.STRING)
     private Genre genre;
-    private Double price;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
 }

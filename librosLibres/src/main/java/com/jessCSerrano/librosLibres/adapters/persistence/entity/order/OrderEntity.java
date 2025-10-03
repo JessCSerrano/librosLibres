@@ -1,10 +1,11 @@
-package com.jessCSerrano.librosLibres.domain.model.order;
+package com.jessCSerrano.librosLibres.adapters.persistence.entity.order;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jessCSerrano.librosLibres.domain.model.client.Client;
+import com.jessCSerrano.librosLibres.adapters.persistence.entity.client.ClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,14 +14,15 @@ import java.util.UUID;
  */
 @Entity
 @Data
-public class Order {
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client client;
+    private ClientEntity clientEntity;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime date;
-    private Double total;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal total;
 }

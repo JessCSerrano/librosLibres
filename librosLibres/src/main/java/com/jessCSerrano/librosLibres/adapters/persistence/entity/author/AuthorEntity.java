@@ -1,4 +1,4 @@
-package com.jessCSerrano.librosLibres.domain.model.client;
+package com.jessCSerrano.librosLibres.adapters.persistence.entity.author;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,14 +9,13 @@ import lombok.Data;
 import java.util.UUID;
 
 /**
- * Represents a customer who purchases books in the bookstore.
+ * Represents an author of one or more books in the bookstore system.
  */
 @Entity
 @Data
-public class Client {
+public class AuthorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-    private String email;
 }

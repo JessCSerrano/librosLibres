@@ -1,21 +1,22 @@
 package com.jessCSerrano.librosLibres.domain.model.author;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
-
-import java.util.UUID;
+import lombok.Getter;
 
 /**
- * Represents an author of one or more books in the bookstore system.
+ * Represents an author with a name.
+ * If the provided name is null or blank, the author name will default to "Anónimo"
+ * Instances  of this class are created using the static factory method {@link #create(String)}.
  */
-@Entity
-@Data
+@Getter
 public class Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    private String name;
+    private static final String DEFAULT_NAME = "Anónimo";
+    private final String name;
+
+    private Author(String name) {
+        this.name = (name == null || name.isBlank()) ? DEFAULT_NAME : name;
+    }
+
+    public static Author create(String name) {
+        return new Author(name);
+    }
 }

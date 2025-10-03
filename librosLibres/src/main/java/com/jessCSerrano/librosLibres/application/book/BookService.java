@@ -1,6 +1,6 @@
 package com.jessCSerrano.librosLibres.application.book;
 
-import com.jessCSerrano.librosLibres.domain.model.book.Book;
+import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
 import com.jessCSerrano.librosLibres.domain.ports.in.GetAllBooksUseCase;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ import java.util.List;
 @Service
 public class BookService implements GetAllBooksUseCase {
     @Override
-    public List<Book> getAllBooks() {
-        var elPrincipito = new Book();
+    public List<BookEntity> getAllBooks() {
+        var elPrincipito = new BookEntity();
         elPrincipito.setTitle("El principito");
-        var harryPotter = new Book();
+        var harryPotter = new BookEntity();
         harryPotter.setTitle("Harry Potter");
         return new ArrayList<>(List.of(elPrincipito, harryPotter));
     }

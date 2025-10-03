@@ -1,9 +1,10 @@
-package com.jessCSerrano.librosLibres.domain.model.order;
+package com.jessCSerrano.librosLibres.adapters.persistence.entity.order;
 
-import com.jessCSerrano.librosLibres.domain.model.book.Book;
+import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -11,16 +12,17 @@ import java.util.UUID;
  */
 @Entity
 @Data
-public class OrderDetail {
+public class OrderDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private OrderEntity orderEntity;
     @ManyToOne
     @JoinColumn(name = "book_id")
-    private Book book;
+    private BookEntity bookEntity;
     private Integer quantity;
-    private Double price;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
 }

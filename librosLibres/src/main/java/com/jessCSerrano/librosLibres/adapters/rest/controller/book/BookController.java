@@ -1,7 +1,7 @@
-package com.jessCSerrano.librosLibres.adapters.rest.book;
+package com.jessCSerrano.librosLibres.adapters.rest.controller.book;
 
 import com.jessCSerrano.librosLibres.application.book.BookService;
-import com.jessCSerrano.librosLibres.domain.model.book.Book;
+import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ public class BookController {
      */
     @Operation(summary = "get all books available in the bookstore")
     @GetMapping
-    public ResponseEntity<List<Book>> getAllBooks() {
+    public ResponseEntity<List<BookEntity>> getAllBooks() {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
 
@@ -68,13 +69,13 @@ public class BookController {
     /**
      * Saves a new book in the Data Base
      *
-     * @param newBook the book to be created
+     * @param newBookEntity the book to be created
      * @return the saved book
      */
     @Operation(summary = "saves a new book in the DB")
     @PostMapping
-    public ResponseEntity<Book> introduceNewBook(Book newBook) {
-        return ResponseEntity.created(URI.create(newBook.getTitle())).build();
+    public ResponseEntity<BookEntity> introduceNewBook(BookEntity newBookEntity) {
+        return ResponseEntity.created(URI.create(newBookEntity.getTitle())).build();
     }
 
     //Cambiar precio de un libro dando su título
@@ -89,10 +90,10 @@ public class BookController {
      */
     @Operation(summary = "updates the price of a book by its given title")
     @PatchMapping("/price")
-    public ResponseEntity<Book> updateBookPrice(String bookName, Double newPrice) {
-        Book newBook = new Book();
-        newBook.setPrice(newPrice);
-        return ResponseEntity.ok(newBook);
+    public ResponseEntity<BookEntity> updateBookPrice(String bookName, BigDecimal newPrice) {
+        BookEntity newBookEntity = new BookEntity();
+        newBookEntity.setPrice(newPrice);
+        return ResponseEntity.ok(newBookEntity);
     }
 
     //Borrar un libro de la base de datos, dado su nombre

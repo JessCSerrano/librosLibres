@@ -1,9 +1,6 @@
 package com.jessCSerrano.librosLibres.adapters.persistence.entity.author;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.UUID;
@@ -13,6 +10,7 @@ import java.util.UUID;
  */
 @Entity
 @Data
+@Table(name = "authors")
 public class AuthorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

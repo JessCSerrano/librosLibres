@@ -1,5 +1,6 @@
 package com.jessCSerrano.librosLibres.adapters.rest.controller.author;
 
+import com.jessCSerrano.librosLibres.adapters.persistence.entity.author.AuthorEntity;
 import com.jessCSerrano.librosLibres.adapters.persistence.mapper.AuthorEntityMapper;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorResponseDto;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
@@ -35,6 +37,7 @@ public class AuthorController {
 
     /**
      * Creates a new author based on authorDto received in the request.
+     *
      * @param authorRequestDto with his details.
      * @return AuthorDto created.
      */
@@ -42,9 +45,14 @@ public class AuthorController {
     @PostMapping
     public ResponseEntity<AuthorResponseDto> createAuthor(@RequestBody AuthorRequestDto authorRequestDto) {
         Author author = dtoMapper.toDomain(authorRequestDto);
-        Author authorSaved =  authorService.createAuthor(author);
-        AuthorResponseDto savedDto = dtoMapper.toResponseDto(authorSaved);
-        URI location = URI.create("/authors/" + savedDto.getId());
-        return ResponseEntity.created(location).body(savedDto);
+        Author authorSaved = authorService.createAuthor(author);
+        AuthorEntity authorEntity = entityMapper.toEntity(authorSaved);
+        AuthorResponseDto savedAuthorDto = dtoMapper.toResponseDto(authorEntity);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedAuthorDto.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(savedAuthorDto);
     }
 }

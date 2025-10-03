@@ -1,4 +1,4 @@
-package com.jessCSerrano.librosLibres.domain.ports.in;
+package com.jessCSerrano.librosLibres.domain.ports.in.book;
 
 import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
 

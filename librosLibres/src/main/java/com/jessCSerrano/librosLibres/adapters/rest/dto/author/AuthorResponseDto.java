@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 /**
- * Data Transfer Object (DTO) to expose author information through the REST API.
+ * Data Transfer Object (DTO) with the response author information through the REST API.
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorDto {
+public class AuthorResponseDto {
+    private UUID id;
     private String name;
 }

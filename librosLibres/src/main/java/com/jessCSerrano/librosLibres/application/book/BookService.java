@@ -1,7 +1,7 @@
 package com.jessCSerrano.librosLibres.application.book;
 
 import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
-import com.jessCSerrano.librosLibres.domain.ports.in.GetAllBooksUseCase;
+import com.jessCSerrano.librosLibres.domain.ports.in.book.GetAllBooksUseCase;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

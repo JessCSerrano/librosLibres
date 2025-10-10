@@ -1,17 +1,16 @@
 package com.jessCSerrano.librosLibres.adapters.rest.controller.author;
 
-import com.jessCSerrano.librosLibres.adapters.persistence.entity.author.AuthorEntity;
 import com.jessCSerrano.librosLibres.adapters.persistence.mapper.AuthorEntityMapper;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorResponseDto;
 import com.jessCSerrano.librosLibres.adapters.rest.mapper.AuthorDtoMapper;
 import com.jessCSerrano.librosLibres.application.author.AuthorService;
-import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 /**
  * Controller rest to manage authors.
@@ -39,20 +39,36 @@ public class AuthorController {
      * Creates a new author based on authorDto received in the request.
      *
      * @param authorRequestDto with his details.
-     * @return AuthorDto created.
+     * @return AuthorDto created and his location.
      */
     @Operation(summary = "creates a new author and saves it in the database")
     @PostMapping
     public ResponseEntity<AuthorResponseDto> createAuthor(@RequestBody AuthorRequestDto authorRequestDto) {
-        Author author = dtoMapper.toDomain(authorRequestDto);
-        Author authorSaved = authorService.createAuthor(author);
-        AuthorEntity authorEntity = entityMapper.toEntity(authorSaved);
-        AuthorResponseDto savedAuthorDto = dtoMapper.toResponseDto(authorEntity);
+        AuthorResponseDto savedAuthorDto = dtoMapper.toResponseDto(
+                authorService.createAuthor(
+                        dtoMapper.toDomain(authorRequestDto)
+                )
+        );
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedAuthorDto.getId())
+                .buildAndExpand(savedAuthorDto.id())
                 .toUri();
         return ResponseEntity.created(location).body(savedAuthorDto);
+    }
+
+    /**
+     * Returns all authors stored in the database.
+     *
+     * @return a list of AuthorResponseDto.
+     */
+    @Operation(summary = "Return all authors stored in the database")
+    @GetMapping
+    public ResponseEntity<List<AuthorResponseDto>> getAuthors() {
+        return ResponseEntity.ok(
+                dtoMapper.toResponseDtoList(
+                        authorService.getAuthors()
+                )
+        );
     }
 }

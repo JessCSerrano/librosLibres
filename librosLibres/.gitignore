@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+###Logs and temporary files###
+*.log
+*.tmp
+*.bak
+
+###Environment files or local configuration###
+.env
+application-*.yml
+application-*.properties
+
+###System files###
+.DS_Store
+Thumbs.db

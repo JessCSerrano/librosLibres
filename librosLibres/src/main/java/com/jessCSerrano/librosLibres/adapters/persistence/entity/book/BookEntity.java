@@ -1,7 +1,7 @@
 package com.jessCSerrano.librosLibres.adapters.persistence.entity.book;
 
 import com.jessCSerrano.librosLibres.adapters.persistence.entity.author.AuthorEntity;
-import com.jessCSerrano.librosLibres.domain.model.book.Genre;
+import com.jessCSerrano.librosLibres.domain.model.book.LiteraryGenre;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,7 +23,7 @@ public class BookEntity {
     private String title;
     private String editorial;
     @Enumerated(value = EnumType.STRING)
-    private Genre genre;
+    private LiteraryGenre literaryGenre;
     @Column(precision = 10, scale = 2)
     private BigDecimal price;
 }

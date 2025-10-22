@@ -1,6 +1,9 @@
 package com.jessCSerrano.librosLibres.adapters.persistence.entity.author;
 
+import com.jessCSerrano.librosLibres.domain.model.author.Genre;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -32,4 +36,14 @@ public class AuthorEntity {
     private UUID id;
     @ToString.Include
     private String name;
+    @ToString.Include
+    private String lastName;
+    @ToString.Include
+    private String nationality;
+    @ToString.Include
+    private LocalDate dateOfBirth;
+    @ToString.Include
+    @Enumerated(value = EnumType.STRING)
+    private Genre genre;
+
 }

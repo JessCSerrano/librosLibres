@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 /**
- * Data Transfer Object (DTO) to expose author information through the REST API.
+ * Data Transfer Object (DTO) used to receive author creation data from the client
  */
 @Data
 @AllArgsConstructor

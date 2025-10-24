@@ -3,6 +3,7 @@ package com.jessCSerrano.librosLibres.domain.ports.out.author;
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Port out that defines persistence operations for the Author entity.
@@ -12,5 +13,8 @@ import java.util.List;
 public interface AuthorRepositoryPort {
 
     Author save(Author author);
+
     List<Author> getAuthors();
+
+    Optional<Author> findAuthorByNames(String name, String lastName);
 }

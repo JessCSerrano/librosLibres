@@ -45,5 +45,4 @@ public class AuthorEntity {
     @ToString.Include
     @Enumerated(value = EnumType.STRING)
     private Genre genre;
-
 }

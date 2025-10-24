@@ -8,8 +8,8 @@ import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This class connects the domain with persistence using Spring Data JPA.
@@ -20,20 +20,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthorRepositoryAdapter implements AuthorRepositoryPort {
 
-    private final SpringDataAuthorRepository jpaRepository;
-    private final AuthorEntityMapper mapper;
+    private final SpringDataAuthorRepository authorJpaRepository;
+    private final AuthorEntityMapper authorMapper;
 
     @Override
     public Author save(Author author) {
-        return mapper.toDomain(
-                jpaRepository.save(mapper.toEntity(author))
+        return authorMapper.toDomain(
+                authorJpaRepository.save(authorMapper.toEntity(author))
         );
     }
 
     @Override
     public List<Author> getAuthors() {
-        return mapper.toDomainList(
-                jpaRepository.findAll()
+        return authorMapper.toDomainList(
+                authorJpaRepository.findAll()
         );
+    }
+
+    @Override
+    public Optional<Author> findAuthorByNames(String name, String lastName) {
+        return authorJpaRepository.findByNameIgnoreCaseAndLastNameIgnoreCase(name, lastName)
+                .map(authorMapper::toDomain);
     }
 }

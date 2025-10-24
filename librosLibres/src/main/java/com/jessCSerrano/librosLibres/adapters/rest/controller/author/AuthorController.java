@@ -1,6 +1,6 @@
 package com.jessCSerrano.librosLibres.adapters.rest.controller.author;
 
-import com.jessCSerrano.librosLibres.adapters.persistence.mapper.AuthorEntityMapper;
+import com.jessCSerrano.librosLibres.adapters.rest.controller.utils.ResponseUtils;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorResponseDto;
 import com.jessCSerrano.librosLibres.adapters.rest.mapper.AuthorDtoMapper;
@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 /**
  * Controller rest to manage authors.
- * Allows you to create a new author using REST endpoint.
+ * Handles operations related to authors, such as creating, retrieving author data via REST endpoints.
  */
 @RestController
 @Slf4j
@@ -32,7 +30,6 @@ import java.util.List;
 public class AuthorController {
 
     private final AuthorService authorService;
-    private final AuthorEntityMapper entityMapper;
     private final AuthorDtoMapper dtoMapper;
 
     /**
@@ -49,12 +46,7 @@ public class AuthorController {
                         dtoMapper.toDomain(authorRequestDto)
                 )
         );
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedAuthorDto.id())
-                .toUri();
-        return ResponseEntity.created(location).body(savedAuthorDto);
+        return ResponseUtils.createUriLocation(savedAuthorDto, savedAuthorDto.id());
     }
 
     /**

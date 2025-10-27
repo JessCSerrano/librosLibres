@@ -23,7 +23,7 @@ public class BookService implements CreateBookUseCase {
     @Override
     public Book createBook(Book book) {
         Author author = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
-                .orElseThrow();
+                .orElseGet(() -> authorRepositoryPort.save(book.author()));
         Book bookCreated = new Book(
                 book.id(),
                 author,

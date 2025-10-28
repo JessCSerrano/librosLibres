@@ -2,8 +2,12 @@ package com.jessCSerrano.librosLibres.adapters.rest.mapper;
 
 import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookResponseDto;
+import com.jessCSerrano.librosLibres.adapters.rest.dto.book.DeleteBookRequestDto;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.UUID;
 
 /**
  * Mapper to convert between Book (domain) to BookDto (rest).

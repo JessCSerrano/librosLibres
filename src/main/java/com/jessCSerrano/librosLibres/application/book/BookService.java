@@ -3,10 +3,14 @@ package com.jessCSerrano.librosLibres.application.book;
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import com.jessCSerrano.librosLibres.domain.ports.in.book.CreateBookUseCase;
+import com.jessCSerrano.librosLibres.domain.ports.in.book.DeleteBookUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
 import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 /**
  * Service that implements the business logic of Book.
@@ -15,11 +19,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class BookService implements CreateBookUseCase {
+public class BookService implements CreateBookUseCase, DeleteBookUseCase {
 
     private final BookRepositoryPort bookRepositoryPort;
     private final AuthorRepositoryPort authorRepositoryPort;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Book createBook(Book book) {
         Author author = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
@@ -33,5 +40,16 @@ public class BookService implements CreateBookUseCase {
                 book.price()
         );
         return bookRepositoryPort.saveBook(bookCreated);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteBook(UUID bookId) {
+        if (!bookRepositoryPort.existsById(bookId)) {
+            throw new EntityNotFoundException();
+        }
+        bookRepositoryPort.deleteBook(bookId);
     }
 }

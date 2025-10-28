@@ -8,6 +8,8 @@ import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 /**
  * This class connects the domain with persistence using Spring Data JPA.
  * Converts between {@link Book} (domain) and {@link com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity} (persistence)
@@ -20,11 +22,30 @@ public class BookRepositoryAdapter implements BookRepositoryPort {
     private final SpringDataBookRepository bookJpaRepository;
     private final BookEntityMapper bookMapper;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Book saveBook(Book book) {
         BookEntity bookEntity = bookMapper.toEntity(book);
         return bookMapper.toDomain(
                 bookJpaRepository.save(bookEntity)
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteBook(UUID bookId) {
+        bookJpaRepository.deleteById(bookId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean existsById(UUID bookId) {
+        return bookJpaRepository.existsById(bookId);
     }
 }

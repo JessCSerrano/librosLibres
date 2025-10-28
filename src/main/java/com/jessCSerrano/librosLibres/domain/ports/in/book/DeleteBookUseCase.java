@@ -2,17 +2,18 @@ package com.jessCSerrano.librosLibres.domain.ports.in.book;
 
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 
+import java.util.UUID;
+
 /**
- * Interface that creates a new book.
+ * Interface that delete a book.
  * The specific implementation is found in {@link com.jessCSerrano.librosLibres.application.book.BookService}
  * This interface works with the domain model {@link Book}
  */
-public interface CreateBookUseCase {
+public interface DeleteBookUseCase {
 
     /**
-     * Creates a new book in the system.
-     * @param book object containing the details of the book to be created
-     * @return the created {@link Book}
+     * Deletes a book by its unique identifier.
+     * @param bookId the unique identifier of the book to delete
      */
-    Book createBook(Book book);
+    void deleteBook(UUID bookId);
 }

@@ -8,6 +8,7 @@ import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -47,5 +48,14 @@ public class BookRepositoryAdapter implements BookRepositoryPort {
     @Override
     public boolean existsById(UUID bookId) {
         return bookJpaRepository.existsById(bookId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Book> findBookById(UUID bookId) {
+        return bookJpaRepository.findById(bookId)
+                .map(bookMapper::toDomain);
     }
 }

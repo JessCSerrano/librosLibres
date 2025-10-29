@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +64,25 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable UUID bookId) {
         bookService.deleteBook(bookId);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Updates a book by its unique identifier with the provided new data.
+     *
+     * @param bookId         the unique identifier of the book to be updated
+     * @param bookRequestDto the new data for the book
+     * @return ResponseEntity with HTTP status 200 ok
+     */
+    @Operation(summary = "Update a book in the database")
+    @PutMapping("/{bookId}")
+    public ResponseEntity<BookResponseDto> updateBook(@PathVariable UUID bookId, @RequestBody BookRequestDto bookRequestDto) {
+        BookResponseDto bookResponseDto = dtoMapper.toResponseDto(
+                bookService.updateBook(
+                        bookId,
+                        dtoMapper.toDomain(bookRequestDto)
+                )
+        );
+        return ResponseEntity.ok(bookResponseDto);
     }
 
 }

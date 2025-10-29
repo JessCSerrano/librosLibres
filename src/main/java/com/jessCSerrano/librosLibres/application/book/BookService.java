@@ -4,12 +4,14 @@ import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import com.jessCSerrano.librosLibres.domain.ports.in.book.CreateBookUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.book.DeleteBookUseCase;
+import com.jessCSerrano.librosLibres.domain.ports.in.book.UpdateBookUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
 import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
@@ -19,7 +21,7 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
-public class BookService implements CreateBookUseCase, DeleteBookUseCase {
+public class BookService implements CreateBookUseCase, DeleteBookUseCase, UpdateBookUseCase {
 
     private final BookRepositoryPort bookRepositoryPort;
     private final AuthorRepositoryPort authorRepositoryPort;
@@ -51,5 +53,30 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase {
             throw new EntityNotFoundException();
         }
         bookRepositoryPort.deleteBook(bookId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Book updateBook(UUID bookId, Book book) {
+        Book existingBook = bookRepositoryPort.findBookById(bookId).orElseThrow(() -> new NoSuchElementException("Book not found with id: " + bookId));
+        Author authorToUse;
+        if (book.author().name().isBlank() || book.author().lastName().isBlank()) {
+            authorToUse = existingBook.author();
+        } else {
+            authorToUse = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
+                    .orElseGet(() -> authorRepositoryPort.save(book.author()));
+        }
+
+        Book updatedBook = new Book(
+                existingBook.id(),
+                authorToUse,
+                book.title() != null ? book.title() : existingBook.title(),
+                book.editorial() != null ? book.editorial() : existingBook.editorial(),
+                book.literaryGenre() != null ? book.literaryGenre() : existingBook.literaryGenre(),
+                book.price() != null ? book.price() : existingBook.price()
+        );
+        return bookRepositoryPort.saveBook(updatedBook);
     }
 }

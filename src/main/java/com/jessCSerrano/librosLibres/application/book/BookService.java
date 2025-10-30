@@ -62,13 +62,13 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
     public Book updateBook(UUID bookId, Book book) {
         Book existingBook = bookRepositoryPort.findBookById(bookId).orElseThrow(() -> new NoSuchElementException("Book not found with id: " + bookId));
         Author authorToUse;
-        if (book.author().name().isBlank() || book.author().lastName().isBlank()) {
-            authorToUse = existingBook.author();
-        } else {
+        if (book.author() != null && book.author().name() != null && !book.author().name().isBlank() &&
+                book.author().lastName() != null && !book.author().lastName().isBlank()) {
             authorToUse = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
-                    .orElseGet(() -> authorRepositoryPort.save(book.author()));
+                    .orElseThrow(EntityNotFoundException::new);
+        } else {
+            authorToUse = existingBook.author();
         }
-
         Book updatedBook = new Book(
                 existingBook.id(),
                 authorToUse,

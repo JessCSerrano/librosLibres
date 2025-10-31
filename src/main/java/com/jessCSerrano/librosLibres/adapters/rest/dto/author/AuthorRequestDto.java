@@ -15,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorRequestDto {
-    private UUID id;
     private String name;
     private String lastName;
     private String nationality;

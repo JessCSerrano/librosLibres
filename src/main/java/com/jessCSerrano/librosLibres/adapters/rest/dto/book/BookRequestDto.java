@@ -16,7 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookRequestDto {
-    private UUID id;
     private AuthorInfoRequest author;
     private String title;
     private String editorial;

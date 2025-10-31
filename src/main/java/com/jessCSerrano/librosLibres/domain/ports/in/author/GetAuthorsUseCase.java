@@ -11,6 +11,11 @@ import java.util.List;
  */
 public interface GetAuthorsUseCase {
 
+    /**
+     * Retrieves all authors stored in the system.
+     *
+     * @return a list containing all existing authors
+     */
     List<Author> getAuthors();
 
 }

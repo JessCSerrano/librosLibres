@@ -9,6 +9,12 @@ import com.jessCSerrano.librosLibres.domain.model.author.Author;
  */
 public interface CreateAuthorUseCase {
 
+    /**
+     * Creates a new author in the system.
+     *
+     * @param author object containing the details of the author to be created
+     * @return the created {@link Author}
+     */
     Author createAuthor(Author author);
 
 }

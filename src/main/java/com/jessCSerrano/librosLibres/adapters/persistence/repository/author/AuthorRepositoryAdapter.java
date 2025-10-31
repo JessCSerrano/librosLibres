@@ -24,13 +24,19 @@ public class AuthorRepositoryAdapter implements AuthorRepositoryPort {
     private final SpringDataAuthorRepository authorJpaRepository;
     private final AuthorEntityMapper authorMapper;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Author save(Author author) {
+    public Author saveAuthor(Author author) {
         return authorMapper.toDomain(
                 authorJpaRepository.save(authorMapper.toEntity(author))
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Author> getAuthors() {
         return authorMapper.toDomainList(
@@ -38,6 +44,9 @@ public class AuthorRepositoryAdapter implements AuthorRepositoryPort {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Author> findAuthorByNames(String name, String lastName) {
         return authorJpaRepository.findByNameIgnoreCaseAndLastNameIgnoreCase(name, lastName)

@@ -16,7 +16,7 @@ public interface BookRepositoryPort {
      * Saves a book in the persistence system.
      *
      * @param book the object to be saved.
-     * @return the saved {@link  Book} with the assigned UUID.
+     * @return the saved {@link  Book} with the assigned UUID
      */
     Book saveBook(Book book);
 

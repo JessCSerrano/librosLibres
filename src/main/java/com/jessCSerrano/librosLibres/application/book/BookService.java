@@ -32,7 +32,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
     @Override
     public Book createBook(Book book) {
         Author author = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
-                .orElseGet(() -> authorRepositoryPort.save(book.author()));
+                .orElseGet(() -> authorRepositoryPort.saveAuthor(book.author()));
         Book bookCreated = new Book(
                 book.id(),
                 author,

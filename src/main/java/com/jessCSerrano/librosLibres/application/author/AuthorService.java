@@ -23,11 +23,17 @@ public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, Up
 
     private final AuthorRepositoryPort authorRepositoryPort;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Author createAuthor(Author author) {
-        return authorRepositoryPort.save(author);
+        return authorRepositoryPort.saveAuthor(author);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Author> getAuthors() {
         return authorRepositoryPort.getAuthors();
@@ -48,6 +54,6 @@ public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, Up
                 author.dateOfBirth() != null ? author.dateOfBirth() : existinAuthor.dateOfBirth(),
                 author.genre() != null ? author.genre() : existinAuthor.genre()
         );
-        return authorRepositoryPort.save(updatedAuthor);
+        return authorRepositoryPort.saveAuthor(updatedAuthor);
     }
 }

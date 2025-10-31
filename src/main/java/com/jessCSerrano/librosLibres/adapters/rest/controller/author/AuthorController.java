@@ -68,7 +68,7 @@ public class AuthorController {
     }
 
     /**
-     * Updates an Author by its unique identifier with the provided new data.
+     * Updates an Author by their unique identifier with the provided new data.
      *
      * @param authorId         the unique identifier of the author to be updated
      * @param authorRequestDto the new data for the author

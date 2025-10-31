@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface UpdateAuthorUseCase {
 
     /**
-     * Updates an author using its unique identifier and the new values provided for the author.
+     * Updates an author by their unique identifier and the new values provided for the author.
      *
      * @param authorId the unique identifier of the author
      * @param author   the new data for the author

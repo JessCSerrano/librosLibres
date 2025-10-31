@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * This class connects the domain with persistence using Spring Data JPA.
@@ -42,4 +43,14 @@ public class AuthorRepositoryAdapter implements AuthorRepositoryPort {
         return authorJpaRepository.findByNameIgnoreCaseAndLastNameIgnoreCase(name, lastName)
                 .map(authorMapper::toDomain);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Author> findAuthorById(UUID authorId) {
+        return authorJpaRepository.findById(authorId)
+                .map(authorMapper::toDomain);
+    }
+
 }

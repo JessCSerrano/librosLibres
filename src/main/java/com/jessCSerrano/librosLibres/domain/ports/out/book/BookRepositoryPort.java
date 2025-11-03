@@ -25,7 +25,7 @@ public interface BookRepositoryPort {
      *
      * @param bookId the unique identifier of the book to delete.
      */
-    void deleteBook(UUID bookId);
+    void deleteBookById(UUID bookId);
 
     /**
      * Checks if a book exists in the persistence system for the given ID.

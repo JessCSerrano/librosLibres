@@ -2,6 +2,7 @@ package com.jessCSerrano.librosLibres.application.author;
 
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.ports.in.author.CreateAuthorUseCase;
+import com.jessCSerrano.librosLibres.domain.ports.in.author.DeleteAuthorUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.author.GetAuthorsUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.author.UpdateAuthorUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
@@ -19,7 +20,7 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
-public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, UpdateAuthorUseCase {
+public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, UpdateAuthorUseCase, DeleteAuthorUseCase {
 
     private final AuthorRepositoryPort authorRepositoryPort;
 
@@ -55,5 +56,17 @@ public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, Up
                 author.genre() != null ? author.genre() : existinAuthor.genre()
         );
         return authorRepositoryPort.saveAuthor(updatedAuthor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteAuthorById(UUID authorId) {
+        if (authorRepositoryPort.existsById(authorId)) {
+            authorRepositoryPort.deleteAuthorById(authorId);
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 }

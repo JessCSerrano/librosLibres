@@ -44,4 +44,20 @@ public interface AuthorRepositoryPort {
      * @return an {@link Optional} containing the {@link Author} if found, or an empty {@code Optional} if no author exists with the given identifier
      */
     Optional<Author> findAuthorById(UUID authorId);
+
+    /**
+     * Deletes an author from the persistence system.
+     * This operation also removes all books associated with the author.
+     *
+     * @param authorId the unique identifier of the author to delete.
+     */
+    void deleteAuthorById(UUID authorId);
+
+    /**
+     * Checks if an author exists in the persistence system for the given ID.
+     *
+     * @param authorId the unique identifier of the author to check.
+     * @return true if the author exists, false otherwise.
+     */
+    boolean existsById(UUID authorId);
 }

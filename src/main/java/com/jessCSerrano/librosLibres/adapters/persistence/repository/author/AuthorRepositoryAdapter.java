@@ -62,4 +62,20 @@ public class AuthorRepositoryAdapter implements AuthorRepositoryPort {
                 .map(authorMapper::toDomain);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteAuthorById(UUID authorId) {
+        authorJpaRepository.deleteById(authorId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean existsById(UUID authorId) {
+        return authorJpaRepository.existsById(authorId);
+    }
+
 }

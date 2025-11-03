@@ -52,7 +52,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
         if (!bookRepositoryPort.existsById(bookId)) {
             throw new EntityNotFoundException();
         }
-        bookRepositoryPort.deleteBook(bookId);
+        bookRepositoryPort.deleteBookById(bookId);
     }
 
     /**

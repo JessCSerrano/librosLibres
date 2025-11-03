@@ -38,7 +38,7 @@ public class BookRepositoryAdapter implements BookRepositoryPort {
      * {@inheritDoc}
      */
     @Override
-    public void deleteBook(UUID bookId) {
+    public void deleteBookById(UUID bookId) {
         bookJpaRepository.deleteById(bookId);
     }
 

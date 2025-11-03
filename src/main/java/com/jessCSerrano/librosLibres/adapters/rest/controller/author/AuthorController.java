@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +42,7 @@ public class AuthorController {
      * @param authorRequestDto with his details.
      * @return AuthorDto created and his location.
      */
-    @Operation(summary = "creates a new author and saves it in the database")
+    @Operation(summary = "Create a new author and saves it in the database")
     @PostMapping
     public ResponseEntity<AuthorResponseDto> createAuthor(@RequestBody AuthorRequestDto authorRequestDto) {
         AuthorResponseDto savedAuthorDto = dtoMapper.toResponseDto(
@@ -84,5 +85,19 @@ public class AuthorController {
                 )
         );
         return ResponseEntity.ok(authorResponseDto);
+    }
+
+    /**
+     * Deletes a given book from the database.
+     * This operation also removes all books associated with the author.
+     *
+     * @param authorId the unique identifier of the book to delete
+     * @return 204 No Content if the book was deleted successfully
+     */
+    @Operation(summary = "Delete an author from the database")
+    @DeleteMapping("/{authorId}")
+    public ResponseEntity<Void> deleteAuthorById(@PathVariable UUID authorId) {
+        authorService.deleteAuthorById(authorId);
+        return ResponseEntity.noContent().build();
     }
 }

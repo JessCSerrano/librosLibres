@@ -61,7 +61,7 @@ public class BookController {
     @Operation(summary = "Delete a book from the database")
     @DeleteMapping("/{bookId}")
     @ApiResponse(responseCode = "204", description = "Book deleted successfully")
-    public ResponseEntity<Void> deleteBook(@PathVariable UUID bookId) {
+    public ResponseEntity<Void> deleteBookById(@PathVariable UUID bookId) {
         bookService.deleteBook(bookId);
         return ResponseEntity.noContent().build();
     }

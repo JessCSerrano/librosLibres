@@ -2,8 +2,10 @@ package com.jessCSerrano.librosLibres.application.book;
 
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
+import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
 import com.jessCSerrano.librosLibres.domain.ports.in.book.CreateBookUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.book.DeleteBookUseCase;
+import com.jessCSerrano.librosLibres.domain.ports.in.book.GetBooksByFilterUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.book.UpdateBookUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
 import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
@@ -11,6 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -21,7 +24,7 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
-public class BookService implements CreateBookUseCase, DeleteBookUseCase, UpdateBookUseCase {
+public class BookService implements CreateBookUseCase, DeleteBookUseCase, UpdateBookUseCase, GetBooksByFilterUseCase {
 
     private final BookRepositoryPort bookRepositoryPort;
     private final AuthorRepositoryPort authorRepositoryPort;
@@ -78,5 +81,13 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
                 book.price() != null ? book.price() : existingBook.price()
         );
         return bookRepositoryPort.saveBook(updatedBook);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Book> findBooksByFilter(BookFilter bookFilter) {
+        return bookRepositoryPort.findBooksByFilter(bookFilter);
     }
 }

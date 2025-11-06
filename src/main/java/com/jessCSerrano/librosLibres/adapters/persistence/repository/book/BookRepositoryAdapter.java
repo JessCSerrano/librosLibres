@@ -3,11 +3,15 @@ package com.jessCSerrano.librosLibres.adapters.persistence.repository.book;
 import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
 import com.jessCSerrano.librosLibres.adapters.persistence.mapper.BookEntityMapper;
 import com.jessCSerrano.librosLibres.adapters.persistence.repository.book.springdata.SpringDataBookRepository;
+import com.jessCSerrano.librosLibres.adapters.persistence.specification.BookSpecifications;
+import com.jessCSerrano.librosLibres.adapters.rest.mapper.BookDtoMapper;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
+import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
 import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,5 +61,14 @@ public class BookRepositoryAdapter implements BookRepositoryPort {
     public Optional<Book> findBookById(UUID bookId) {
         return bookJpaRepository.findById(bookId)
                 .map(bookMapper::toDomain);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Book> findBooksByFilter(BookFilter bookFilter) {
+        var specification = BookSpecifications.withFilters(bookFilter);
+        return bookJpaRepository.findAll(specification).stream().map(bookMapper::toDomain).toList();
     }
 }

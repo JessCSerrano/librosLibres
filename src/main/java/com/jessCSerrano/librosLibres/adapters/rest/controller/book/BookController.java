@@ -1,10 +1,13 @@
 package com.jessCSerrano.librosLibres.adapters.rest.controller.book;
 
 import com.jessCSerrano.librosLibres.adapters.rest.controller.utils.ResponseUtils;
+import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookFilterRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookResponseDto;
 import com.jessCSerrano.librosLibres.adapters.rest.mapper.BookDtoMapper;
 import com.jessCSerrano.librosLibres.application.book.BookService;
+import com.jessCSerrano.librosLibres.domain.model.book.Book;
+import com.jessCSerrano.librosLibres.domain.model.book.LiteraryGenre;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,13 +15,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -83,6 +90,35 @@ public class BookController {
                 )
         );
         return ResponseEntity.ok(bookResponseDto);
+    }
+
+    /**
+     * Retrieves a list of books that match the specified filter criteria.
+     *
+     * @param maxPrice       filter books with a price lower than the given value
+     * @param authorName     filter books written by the specified author (first name)
+     * @param authorLastName filter books written by the specified author  (last name)
+     * @param editorial      filter books published by the specified editorial
+     * @param literaryGenre  filter books belonging to the specified literary genre
+     * @return A list of books that match the given filter parameters
+     */
+    @Operation(summary = "Retrieve a list of books that match the specified filter criteria")
+    @GetMapping
+    public ResponseEntity<List<Book>> getBooksByFilter(
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) String authorName,
+            @RequestParam(required = false) String authorLastName,
+            @RequestParam(required = false) String editorial,
+            @RequestParam(required = false) LiteraryGenre literaryGenre
+    ) {
+        BookFilterRequestDto bookFilterRequestDto = new BookFilterRequestDto(
+                maxPrice,
+                authorName,
+                authorLastName,
+                editorial,
+                literaryGenre
+        );
+        return ResponseEntity.ok(bookService.findBooksByFilter(dtoMapper.toDomainBookFilter(bookFilterRequestDto)));
     }
 
 }

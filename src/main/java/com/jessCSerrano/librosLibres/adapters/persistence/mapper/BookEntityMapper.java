@@ -2,6 +2,7 @@ package com.jessCSerrano.librosLibres.adapters.persistence.mapper;
 
 import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
+import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,4 +17,5 @@ public interface BookEntityMapper {
 
     @Mapping(source = "author", target = "authorEntity")
     BookEntity toEntity(Book book);
+
 }

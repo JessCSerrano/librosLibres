@@ -12,7 +12,7 @@ import java.util.List;
 public interface GetAuthorsUseCase {
 
     /**
-     * Retrieves all authors stored in the system.
+     * Retrieves all authors.
      *
      * @return a list containing all existing authors
      */

@@ -92,6 +92,16 @@ public class BookController {
         return ResponseEntity.ok(bookResponseDto);
     }
 
+    /**
+     * Retrieves a list of books that match the specified filter criteria.
+     *
+     * @param maxPrice       filter books with a price lower than the given value
+     * @param authorName     filter books written by the specified author (first name)
+     * @param authorLastName filter books written by the specified author  (last name)
+     * @param editorial      filter books published by the specified editorial
+     * @param literaryGenre  filter books belonging to the specified literary genre
+     * @return A list of books that match the given filter parameters
+     */
     @Operation(summary = "Retrieve a list of books that match the specified filter criteria")
     @GetMapping
     public ResponseEntity<List<Book>> getBooksByFilter(

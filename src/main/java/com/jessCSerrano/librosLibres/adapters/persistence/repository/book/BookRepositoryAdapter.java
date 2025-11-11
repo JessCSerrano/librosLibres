@@ -4,7 +4,6 @@ import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity
 import com.jessCSerrano.librosLibres.adapters.persistence.mapper.BookEntityMapper;
 import com.jessCSerrano.librosLibres.adapters.persistence.repository.book.springdata.SpringDataBookRepository;
 import com.jessCSerrano.librosLibres.adapters.persistence.specification.BookSpecifications;
-import com.jessCSerrano.librosLibres.adapters.rest.mapper.BookDtoMapper;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
 import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;

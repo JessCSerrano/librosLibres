@@ -2,6 +2,7 @@ package com.jessCSerrano.librosLibres.adapters.persistence.specification;
 
 import com.jessCSerrano.librosLibres.adapters.persistence.entity.author.AuthorEntity;
 import com.jessCSerrano.librosLibres.adapters.persistence.entity.book.BookEntity;
+import com.jessCSerrano.librosLibres.adapters.persistence.specification.utils.SpecificationsUtils;
 import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
@@ -11,8 +12,19 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides Specification for filtering {@link BookEntity} records.
+ * This class dynamically builds query predicates using the JPA Criteria API.
+ */
 public class BookSpecifications {
 
+    /**
+     * This method creates a list of predicates using the JPA Criteria API.
+     *
+     * @param bookFilter an object containing the filter parameters
+     * @return a {@link Specification} that can be used with {@link org.springframework.data.jpa.repository.JpaSpecificationExecutor}
+     * to retrieve books matching the specified filter criteria
+     */
     public static Specification<BookEntity> withFilters(BookFilter bookFilter) {
 
         return (root, query, criteriaBuilder) -> {
@@ -27,20 +39,11 @@ public class BookSpecifications {
 
                 Join<BookEntity, AuthorEntity> authorJoin = root.join("authorEntity", JoinType.INNER);
 
-                if (bookFilter.authorName() != null && !bookFilter.authorName().isBlank()) {
-                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(authorJoin.get("name")),
-                            "%" + bookFilter.authorName().toLowerCase() + "%"));
-                }
-                if (bookFilter.authorLastName() != null && !bookFilter.authorLastName().isBlank()) {
-                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(authorJoin.get("lastName")),
-                            "%" + bookFilter.authorLastName() + "%"));
-                }
+                SpecificationsUtils.addLikeIfPresent(bookFilter.authorName(), predicates, criteriaBuilder, authorJoin.get("name"));
+                SpecificationsUtils.addLikeIfPresent(bookFilter.authorLastName(), predicates, criteriaBuilder, authorJoin.get("lastName"));
             }
 
-            if (bookFilter.editorial() != null && !bookFilter.editorial().isBlank()) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("editorial")),
-                        "%" + bookFilter.editorial().toLowerCase() + "%"));
-            }
+            SpecificationsUtils.addLikeIfPresent(bookFilter.editorial(), predicates, criteriaBuilder, root.get("editorial"));
 
             if (bookFilter.literaryGenre() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("literaryGenre"), bookFilter.literaryGenre()));
@@ -48,6 +51,5 @@ public class BookSpecifications {
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
-
     }
 }

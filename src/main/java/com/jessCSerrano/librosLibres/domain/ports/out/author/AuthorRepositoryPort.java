@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface AuthorRepositoryPort {
 
     /**
-     * Saves an author in the persistence system.
+     * Saves an author.
      *
      * @param author the object to be saved
      * @return the saved {@link Author} with the assigned UUID
@@ -22,14 +22,14 @@ public interface AuthorRepositoryPort {
     Author saveAuthor(Author author);
 
     /**
-     * Retrieves all the author stored in the persistence system.
+     * Retrieves all the authors.
      *
      * @return a list containing all existing authors
      */
     List<Author> getAuthors();
 
     /**
-     * Searches for an author in the persistence system by their name and last name.
+     * Searches for an author by their name and last name.
      *
      * @param name     the name of the author to search for
      * @param lastName the last name of the author to search for
@@ -38,7 +38,7 @@ public interface AuthorRepositoryPort {
     Optional<Author> findAuthorByNames(String name, String lastName);
 
     /**
-     * Searches for an author in the persistence system by their unique identifier.
+     * Searches for an author by their unique identifier.
      *
      * @param authorId the unique identifier of the author to search for
      * @return an {@link Optional} containing the {@link Author} if found, or an empty {@code Optional} if no author exists with the given identifier
@@ -46,7 +46,7 @@ public interface AuthorRepositoryPort {
     Optional<Author> findAuthorById(UUID authorId);
 
     /**
-     * Deletes an author from the persistence system.
+     * Deletes an author.
      * This operation also removes all books associated with the author.
      *
      * @param authorId the unique identifier of the author to delete.
@@ -54,7 +54,7 @@ public interface AuthorRepositoryPort {
     void deleteAuthorById(UUID authorId);
 
     /**
-     * Checks if an author exists in the persistence system for the given ID.
+     * Checks if an author exists for the given ID.
      *
      * @param authorId the unique identifier of the author to check.
      * @return true if the author exists, false otherwise.

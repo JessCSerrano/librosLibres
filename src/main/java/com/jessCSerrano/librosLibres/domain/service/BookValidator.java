@@ -1,5 +1,6 @@
 package com.jessCSerrano.librosLibres.domain.service;
 
+import com.jessCSerrano.librosLibres.domain.exceptions.InvalidBookPriceException;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,8 @@ import java.math.BigDecimal;
 @Component
 public class BookValidator {
 
+    private static final String INVALID_PRICE = "Book price must be greater than zero";
+
     /**
      * Method to validate a price of book. This price must be greater than zero.
      *
@@ -18,7 +21,7 @@ public class BookValidator {
      */
     public void validateBook(Book book) {
         if (book.price() == null || book.price().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Book price must be greater than zero");
+            throw new InvalidBookPriceException(INVALID_PRICE);
         }
     }
 }

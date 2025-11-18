@@ -1,12 +1,13 @@
 package com.jessCSerrano.librosLibres.application.author;
 
+import com.jessCSerrano.librosLibres.common.constants.EntityNames;
+import com.jessCSerrano.librosLibres.domain.exceptions.EntityNotFoundException;
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.ports.in.author.CreateAuthorUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.author.DeleteAuthorUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.author.GetAuthorsUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.in.author.UpdateAuthorUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, Up
     @Override
     public Author updateAuthor(UUID authorId, Author author) {
         Author existinAuthor = authorRepositoryPort.findAuthorById(authorId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException(EntityNames.AUTHOR, authorId));
         Author updatedAuthor = new Author(
                 existinAuthor.id(),
                 author.name() != null ? author.name() : existinAuthor.name(),
@@ -66,7 +67,7 @@ public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, Up
         if (authorRepositoryPort.existsById(authorId)) {
             authorRepositoryPort.deleteAuthorById(authorId);
         } else {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException(EntityNames.AUTHOR, authorId);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.jessCSerrano.librosLibres.application.book;
 
+import com.jessCSerrano.librosLibres.common.constants.EntityNames;
+import com.jessCSerrano.librosLibres.domain.exceptions.EntityNotFoundException;
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
@@ -9,12 +11,10 @@ import com.jessCSerrano.librosLibres.domain.ports.in.book.GetBooksByFilterUseCas
 import com.jessCSerrano.librosLibres.domain.ports.in.book.UpdateBookUseCase;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
 import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
@@ -53,7 +53,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
     @Override
     public void deleteBook(UUID bookId) {
         if (!bookRepositoryPort.existsById(bookId)) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException(EntityNames.BOOK, bookId);
         }
         bookRepositoryPort.deleteBookById(bookId);
     }
@@ -63,12 +63,12 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
      */
     @Override
     public Book updateBook(UUID bookId, Book book) {
-        Book existingBook = bookRepositoryPort.findBookById(bookId).orElseThrow(() -> new NoSuchElementException("Book not found with id: " + bookId));
+        Book existingBook = bookRepositoryPort.findBookById(bookId).orElseThrow(() -> new EntityNotFoundException(EntityNames.BOOK, bookId));
         Author authorToUse;
         if (book.author() != null && book.author().name() != null && !book.author().name().isBlank() &&
                 book.author().lastName() != null && !book.author().lastName().isBlank()) {
             authorToUse = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
-                    .orElseThrow(EntityNotFoundException::new);
+                    .orElseThrow(() -> new EntityNotFoundException(EntityNames.BOOK, bookId));
         } else {
             authorToUse = existingBook.author();
         }

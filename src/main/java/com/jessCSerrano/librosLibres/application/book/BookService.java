@@ -2,6 +2,7 @@ package com.jessCSerrano.librosLibres.application.book;
 
 import com.jessCSerrano.librosLibres.common.constants.EntityNames;
 import com.jessCSerrano.librosLibres.domain.exceptions.EntityNotFoundException;
+import com.jessCSerrano.librosLibres.domain.exceptions.InvalidBookPriceException;
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
@@ -14,6 +15,7 @@ import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +30,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
 
     private final BookRepositoryPort bookRepositoryPort;
     private final AuthorRepositoryPort authorRepositoryPort;
+    private static final String INVALID_PRICE = "Book price must be greater than zero";
 
     /**
      * {@inheritDoc}
@@ -44,6 +47,11 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
                 book.literaryGenre(),
                 book.price()
         );
+
+        if (bookCreated.price() == null || bookCreated.price().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new InvalidBookPriceException(INVALID_PRICE);
+        }
+
         return bookRepositoryPort.saveBook(bookCreated);
     }
 

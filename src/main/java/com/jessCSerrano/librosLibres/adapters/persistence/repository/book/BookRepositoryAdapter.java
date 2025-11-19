@@ -7,7 +7,6 @@ import com.jessCSerrano.librosLibres.adapters.persistence.specification.BookSpec
 import com.jessCSerrano.librosLibres.domain.model.book.Book;
 import com.jessCSerrano.librosLibres.domain.model.book.BookFilter;
 import com.jessCSerrano.librosLibres.domain.ports.out.book.BookRepositoryPort;
-import com.jessCSerrano.librosLibres.domain.service.BookValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +25,6 @@ public class BookRepositoryAdapter implements BookRepositoryPort {
 
     private final SpringDataBookRepository bookJpaRepository;
     private final BookEntityMapper bookMapper;
-    private final BookValidator bookValidator;
 
     /**
      * {@inheritDoc}
@@ -34,10 +32,8 @@ public class BookRepositoryAdapter implements BookRepositoryPort {
      */
     @Override
     public Book saveBook(Book book) {
-        bookValidator.validateBook(book);
-        BookEntity bookEntity = bookMapper.toEntity(book);
         return bookMapper.toDomain(
-                bookJpaRepository.save(bookEntity)
+                bookJpaRepository.save(bookMapper.toEntity(book))
         );
     }
 

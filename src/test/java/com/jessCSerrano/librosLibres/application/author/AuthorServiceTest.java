@@ -6,7 +6,6 @@ import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.model.author.Genre;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +16,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,6 +52,19 @@ public class AuthorServiceTest {
     }
 
     @Test
+    void getAuthorsTest() {
+        //1- Given
+        List<Author> authorsGiven = new ArrayList<>(List.of(authorGiven));
+        Mockito.when(authorRepositoryPort.getAuthors()).thenReturn(authorsGiven);
+
+        //2- Act
+        List<Author> authorsReturned = authorService.getAuthors();
+
+        //3- Assert
+        Assertions.assertEquals(authorsGiven, authorsReturned);
+    }
+
+    @Test
     void updateExistingAuthorTest() {
         //1- Given
         Author authorGivenUpdated = new Author(authorGiven.id(), "name2", "lastName2", "nationality", LocalDate.now(), Genre.FEMALE);
@@ -76,6 +90,29 @@ public class AuthorServiceTest {
         //2- Act & assert
         Assertions.assertThrows(
                 EntityNotFoundException.class,
-                ()-> authorService.updateAuthor(authorGiven.id(), authorGiven));
+                () -> authorService.updateAuthor(authorGiven.id(), authorGiven));
+    }
+
+    @Test
+    void deleteExistingAuthorByIdTest() {
+        //1- Given
+        Mockito.when(authorRepositoryPort.existsById(authorGiven.id())).thenReturn(true);
+
+        //2- Act
+        authorService.deleteAuthorById(authorGiven.id());
+
+        //3- Assert
+        Mockito.verify(authorRepositoryPort).existsById(authorGiven.id());
+        Mockito.verify(authorRepositoryPort).deleteAuthorById(authorGiven.id());
+    }
+
+    @Test
+    void deleteNonExistingAuthorByIdTest() {
+        //1- Given
+        Mockito.when(authorRepositoryPort.existsById(authorGiven.id())).thenReturn(false);
+
+        //2- Act & Assert
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> authorService.deleteAuthorById(authorGiven.id()));
     }
 }

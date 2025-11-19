@@ -7,7 +7,6 @@ import com.jessCSerrano.librosLibres.domain.model.author.Genre;
 import com.jessCSerrano.librosLibres.domain.ports.out.author.AuthorRepositoryPort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,7 +36,6 @@ public class AuthorServiceTest {
         authorGiven = new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
     }
 
-    @DisplayName("Create author test")
     @Test
     void createAuthorTest() {
         //1- Given

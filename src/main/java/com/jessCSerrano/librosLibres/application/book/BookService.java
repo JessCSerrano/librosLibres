@@ -37,6 +37,11 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
      */
     @Override
     public Book createBook(Book book) {
+
+        if (book.price() == null || book.price().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new InvalidBookPriceException(INVALID_PRICE);
+        }
+
         Author author = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
                 .orElseGet(() -> authorRepositoryPort.saveAuthor(book.author()));
         Book bookCreated = new Book(
@@ -47,10 +52,6 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
                 book.literaryGenre(),
                 book.price()
         );
-
-        if (bookCreated.price() == null || bookCreated.price().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new InvalidBookPriceException(INVALID_PRICE);
-        }
 
         return bookRepositoryPort.saveBook(bookCreated);
     }

@@ -24,12 +24,12 @@ import java.util.UUID;
 public class AuthorServiceTest {
 
     @InjectMocks
-    AuthorService authorService;
+    private AuthorService authorService;
 
     @Mock
-    AuthorRepositoryPort authorRepositoryPort;
+    private AuthorRepositoryPort authorRepositoryPort;
 
-    Author authorGiven;
+    private Author authorGiven;
 
     @BeforeEach
     void init() {

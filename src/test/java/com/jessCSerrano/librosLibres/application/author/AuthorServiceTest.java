@@ -1,6 +1,5 @@
 package com.jessCSerrano.librosLibres.application.author;
 
-import com.jessCSerrano.librosLibres.common.constants.EntityNames;
 import com.jessCSerrano.librosLibres.domain.exceptions.EntityNotFoundException;
 import com.jessCSerrano.librosLibres.domain.model.author.Author;
 import com.jessCSerrano.librosLibres.domain.model.author.Genre;
@@ -82,8 +81,7 @@ public class AuthorServiceTest {
     @Test
     void updateNonExistingAuthorTest() {
         //1- Given
-        Mockito.when(authorRepositoryPort.findAuthorById(
-                authorGiven.id())).thenThrow(new EntityNotFoundException(EntityNames.AUTHOR, authorGiven.id()));
+        Mockito.when(authorRepositoryPort.findAuthorById(authorGiven.id())).thenReturn(Optional.empty());
 
         //2- Act & assert
         Assertions.assertThrows(

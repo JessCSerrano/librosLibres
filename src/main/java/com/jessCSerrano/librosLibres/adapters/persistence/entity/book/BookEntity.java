@@ -4,7 +4,6 @@ import com.jessCSerrano.librosLibres.adapters.persistence.entity.author.AuthorEn
 import com.jessCSerrano.librosLibres.domain.model.book.LiteraryGenre;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +38,7 @@ public class BookEntity {
     @ToString.Include
     private String title;
     @ToString.Include
-    private String editorial;
+    private String publisher;
     @ToString.Include
     @Enumerated(value = EnumType.STRING)
     private LiteraryGenre literaryGenre;

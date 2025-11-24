@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class BookRequestDto {
     private AuthorInfoRequest author;
     private String title;
-    private String editorial;
+    private String publisher;
     private LiteraryGenre literaryGenre;
     @DecimalMin(value = "0.01", message = "Price must be greater than zero")
     private BigDecimal price;

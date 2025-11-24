@@ -139,7 +139,7 @@ public class BookServiceTest {
     }
 
     @Test
-    void updateBookExistingBookAndAuthor() {
+    void updateBookExistingBookAndUpdatedAuthor() {
         //1- Given
         Book bookGivenUpdated = new Book(bookGiven.id(),
                 bookGiven.author(),
@@ -163,8 +163,8 @@ public class BookServiceTest {
     }
 
     @Test
-    void updateBookExistingBookAndNonUpdateAuthor() {
-        Book bookGivenWithNonExistingAuthor = new Book(bookGiven.id(),
+    void updateBookExistingBookWithOutdatedAuthor() {
+        Book bookGivenWithOutdatedAuthor = new Book(bookGiven.id(),
                 null,
                 "title2",
                 "publisher",
@@ -182,7 +182,7 @@ public class BookServiceTest {
 
 
         //2- Act
-        Book bookReturned = bookService.updateBook(bookGiven.id(), bookGivenWithNonExistingAuthor);
+        Book bookReturned = bookService.updateBook(bookGiven.id(), bookGivenWithOutdatedAuthor);
 
         //Assert
         Assertions.assertEquals(bookGiven.price(), bookReturned.price());

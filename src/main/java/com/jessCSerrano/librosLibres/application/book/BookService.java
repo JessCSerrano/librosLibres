@@ -77,7 +77,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
         if (book.author() != null && book.author().name() != null && !book.author().name().isBlank() &&
                 book.author().lastName() != null && !book.author().lastName().isBlank()) {
             authorToUse = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
-                    .orElseThrow(() -> new EntityNotFoundException(EntityNames.BOOK, bookId));
+                    .orElseThrow(() -> new EntityNotFoundException(book.author().name(), book.author().lastName()));
         } else {
             authorToUse = existingBook.author();
         }

@@ -98,7 +98,7 @@ public class BookController {
      * @param maxPrice       filter books with a price lower than the given value
      * @param authorName     filter books written by the specified author (first name)
      * @param authorLastName filter books written by the specified author  (last name)
-     * @param editorial      filter books published by the specified editorial
+     * @param publisher      filter books published by the specified publisher
      * @param literaryGenre  filter books belonging to the specified literary genre
      * @return A list of books that match the given filter parameters
      */
@@ -108,14 +108,14 @@ public class BookController {
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) String authorName,
             @RequestParam(required = false) String authorLastName,
-            @RequestParam(required = false) String editorial,
+            @RequestParam(required = false) String publisher,
             @RequestParam(required = false) LiteraryGenre literaryGenre
     ) {
         BookFilterRequestDto bookFilterRequestDto = new BookFilterRequestDto(
                 maxPrice,
                 authorName,
                 authorLastName,
-                editorial,
+                publisher,
                 literaryGenre
         );
         return ResponseEntity.ok(bookService.findBooksByFilter(dtoMapper.toDomainBookFilter(bookFilterRequestDto)));

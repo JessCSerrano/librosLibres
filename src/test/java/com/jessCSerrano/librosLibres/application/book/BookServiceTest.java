@@ -61,7 +61,7 @@ public class BookServiceTest {
         //3-Assert
         Assertions.assertNotNull(bookReturned);
         Assertions.assertEquals(bookGiven.title(), bookReturned.title());
-        Assertions.assertEquals(bookGiven.editorial(), bookReturned.editorial());
+        Assertions.assertEquals(bookGiven.publisher(), bookReturned.publisher());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class BookServiceTest {
         //3-Assert
         Assertions.assertNotNull(bookReturned);
         Assertions.assertEquals(bookGiven.title(), bookReturned.title());
-        Assertions.assertEquals(bookGiven.editorial(), bookReturned.editorial());
+        Assertions.assertEquals(bookGiven.publisher(), bookReturned.publisher());
     }
 
     @Test
@@ -157,7 +157,7 @@ public class BookServiceTest {
         //3- Assert
         Assertions.assertNotNull(bookReturned);
         Assertions.assertEquals(bookGivenUpdated.author(), bookReturned.author());
-        Assertions.assertEquals(bookGivenUpdated.editorial(), bookReturned.editorial());
+        Assertions.assertEquals(bookGivenUpdated.publisher(), bookReturned.publisher());
         Assertions.assertNotEquals(bookGiven.title(), bookReturned.title());
         Assertions.assertNotEquals(bookGiven.literaryGenre(), bookReturned.literaryGenre());
     }

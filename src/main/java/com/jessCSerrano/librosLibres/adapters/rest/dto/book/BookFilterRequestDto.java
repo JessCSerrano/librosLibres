@@ -17,6 +17,6 @@ public class BookFilterRequestDto {
     private BigDecimal maxPrice;
     private String authorName;
     private String authorLastName;
-    private String editorial;
+    private String publisher;
     private LiteraryGenre literaryGenre;
 }

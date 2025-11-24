@@ -43,7 +43,7 @@ public class BookSpecifications {
                 SpecificationsUtils.addLikeIfPresent(bookFilter.authorLastName(), predicates, criteriaBuilder, authorJoin.get("lastName"));
             }
 
-            SpecificationsUtils.addLikeIfPresent(bookFilter.editorial(), predicates, criteriaBuilder, root.get("editorial"));
+            SpecificationsUtils.addLikeIfPresent(bookFilter.publisher(), predicates, criteriaBuilder, root.get("publisher"));
 
             if (bookFilter.literaryGenre() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("literaryGenre"), bookFilter.literaryGenre()));

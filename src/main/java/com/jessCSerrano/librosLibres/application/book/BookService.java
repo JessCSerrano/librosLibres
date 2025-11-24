@@ -48,7 +48,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
                 book.id(),
                 author,
                 book.title(),
-                book.editorial(),
+                book.publisher(),
                 book.literaryGenre(),
                 book.price()
         );
@@ -85,7 +85,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
                 existingBook.id(),
                 authorToUse,
                 book.title() != null ? book.title() : existingBook.title(),
-                book.editorial() != null ? book.editorial() : existingBook.editorial(),
+                book.publisher() != null ? book.publisher() : existingBook.publisher(),
                 book.literaryGenre() != null ? book.literaryGenre() : existingBook.literaryGenre(),
                 book.price() != null ? book.price() : existingBook.price()
         );

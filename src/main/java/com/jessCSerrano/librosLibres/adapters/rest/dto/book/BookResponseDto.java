@@ -19,7 +19,7 @@ public class BookResponseDto {
     private UUID id;
     private AuthorResponseDto author;
     private String title;
-    private String editorial;
+    private String publisher;
     private LiteraryGenre literaryGenre;
     private BigDecimal price;
 }

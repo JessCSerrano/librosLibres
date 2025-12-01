@@ -1,6 +1,5 @@
 package com.jessCSerrano.librosLibres.adapters.rest.controller.book;
 
-import com.jessCSerrano.librosLibres.adapters.rest.controller.utils.ResponseUtils;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookFilterRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.book.BookResponseDto;
@@ -56,7 +55,7 @@ public class BookController {
                         dtoMapper.toDomain(bookRequestDto)
                 )
         );
-        return ResponseUtils.createUriLocation(savedBookDto, savedBookDto.getId());
+        return ResponseEntity.ok(savedBookDto);
     }
 
     /**

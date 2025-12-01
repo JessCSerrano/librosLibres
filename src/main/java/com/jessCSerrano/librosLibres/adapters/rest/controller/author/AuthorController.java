@@ -1,6 +1,5 @@
 package com.jessCSerrano.librosLibres.adapters.rest.controller.author;
 
-import com.jessCSerrano.librosLibres.adapters.rest.controller.utils.ResponseUtils;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorRequestDto;
 import com.jessCSerrano.librosLibres.adapters.rest.dto.author.AuthorResponseDto;
 import com.jessCSerrano.librosLibres.adapters.rest.mapper.AuthorDtoMapper;
@@ -50,7 +49,7 @@ public class AuthorController {
                         dtoMapper.toDomain(authorRequestDto)
                 )
         );
-        return ResponseUtils.createUriLocation(savedAuthorDto, savedAuthorDto.id());
+        return ResponseEntity.ok(savedAuthorDto);
     }
 
     /**

@@ -34,12 +34,12 @@ public class BookSpecifications {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), bookFilter.maxPrice()));
             }
 
-            if (bookFilter.authorName() != null && !bookFilter.authorName().isBlank() ||
+            if (bookFilter.authorFirstName() != null && !bookFilter.authorFirstName().isBlank() ||
                     bookFilter.authorLastName() != null && !bookFilter.authorLastName().isBlank()) {
 
                 Join<BookEntity, AuthorEntity> authorJoin = root.join("authorEntity", JoinType.INNER);
 
-                SpecificationsUtils.addLikeIfPresent(bookFilter.authorName(), predicates, criteriaBuilder, authorJoin.get("name"));
+                SpecificationsUtils.addLikeIfPresent(bookFilter.authorFirstName(), predicates, criteriaBuilder, authorJoin.get("firstName"));
                 SpecificationsUtils.addLikeIfPresent(bookFilter.authorLastName(), predicates, criteriaBuilder, authorJoin.get("lastName"));
             }
 

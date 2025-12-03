@@ -42,7 +42,7 @@ public class BookServiceTest {
     @BeforeEach
     void init() {
         bookGiven = new Book(UUID.randomUUID(),
-                new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
+                new Author(UUID.randomUUID(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
                 "title",
                 "publisher",
                 LiteraryGenre.POETRY,
@@ -52,7 +52,7 @@ public class BookServiceTest {
     @Test
     void createBookWithExistingAuthor() {
         //1- Given
-        Mockito.when(authorRepositoryPort.findAuthorByNames(bookGiven.author().name(), bookGiven.author().lastName())).thenReturn(Optional.ofNullable(bookGiven.author()));
+        Mockito.when(authorRepositoryPort.findAuthorByName(bookGiven.author().firstName(), bookGiven.author().lastName())).thenReturn(Optional.ofNullable(bookGiven.author()));
         Mockito.when(bookRepositoryPort.saveBook(bookGiven)).thenReturn(bookGiven);
 
         //2- Act
@@ -67,7 +67,7 @@ public class BookServiceTest {
     @Test
     void createBookWithNonExistingAuthor() {
         //1- Given
-        Mockito.when(authorRepositoryPort.findAuthorByNames(bookGiven.author().name(), bookGiven.author().lastName())).thenReturn(Optional.empty());
+        Mockito.when(authorRepositoryPort.findAuthorByName(bookGiven.author().firstName(), bookGiven.author().lastName())).thenReturn(Optional.empty());
         Mockito.when(authorRepositoryPort.saveAuthor(bookGiven.author())).thenReturn(bookGiven.author());
         Mockito.when(bookRepositoryPort.saveBook(bookGiven)).thenReturn(bookGiven);
 
@@ -84,7 +84,7 @@ public class BookServiceTest {
     void createInvalidBookWithZeroPrice() {
         //1- Given
         Book bookInvalidPriceGiven = new Book(UUID.randomUUID(),
-                new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
+                new Author(UUID.randomUUID(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
                 "title",
                 "publisher",
                 LiteraryGenre.FICTION,
@@ -101,7 +101,7 @@ public class BookServiceTest {
     void createInvalidBookWithNullPrice() {
         //1- Given
         Book bookInvalidPriceGiven = new Book(UUID.randomUUID(),
-                new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
+                new Author(UUID.randomUUID(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
                 "title",
                 "publisher",
                 LiteraryGenre.FICTION,
@@ -148,7 +148,7 @@ public class BookServiceTest {
                 LiteraryGenre.THRILLER,
                 BigDecimal.valueOf(20));
         Mockito.when(bookRepositoryPort.findBookById(bookGiven.id())).thenReturn(Optional.ofNullable(bookGiven));
-        Mockito.when(authorRepositoryPort.findAuthorByNames(bookGiven.author().name(), bookGiven.author().lastName())).thenReturn(Optional.ofNullable(bookGiven.author()));
+        Mockito.when(authorRepositoryPort.findAuthorByName(bookGiven.author().firstName(), bookGiven.author().lastName())).thenReturn(Optional.ofNullable(bookGiven.author()));
         Mockito.when(bookRepositoryPort.saveBook(bookGivenUpdated)).thenReturn(bookGivenUpdated);
 
         //2- Act
@@ -195,12 +195,12 @@ public class BookServiceTest {
         //1-Given
         Mockito.when(bookRepositoryPort.findBookById(bookGiven.id())).thenReturn(Optional.ofNullable(bookGiven));
         Book bookGivenWithNonExistingAuthor = new Book(bookGiven.id(),
-                new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
+                new Author(UUID.randomUUID(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
                 "title2",
                 "publisher",
                 LiteraryGenre.THRILLER,
                 new BigDecimal(20));
-        Mockito.when(authorRepositoryPort.findAuthorByNames(bookGivenWithNonExistingAuthor.author().name(), bookGivenWithNonExistingAuthor.author().lastName())).thenReturn(Optional.empty());
+        Mockito.when(authorRepositoryPort.findAuthorByName(bookGivenWithNonExistingAuthor.author().firstName(), bookGivenWithNonExistingAuthor.author().lastName())).thenReturn(Optional.empty());
 
         //2- Act & Assert
         Assertions.assertThrows(
@@ -232,7 +232,7 @@ public class BookServiceTest {
         //1- Given
         BookFilter bookFilterGiven = new BookFilter(
                 BigDecimal.valueOf(10),
-                "authorName",
+                "authorFirstName",
                 "authorLastName",
                 "publisher",
                 LiteraryGenre.HISTORY

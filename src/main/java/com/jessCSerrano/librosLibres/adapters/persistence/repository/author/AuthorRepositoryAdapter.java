@@ -48,8 +48,8 @@ public class AuthorRepositoryAdapter implements AuthorRepositoryPort {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Author> findAuthorByNames(String name, String lastName) {
-        return authorJpaRepository.findByNameIgnoreCaseAndLastNameIgnoreCase(name, lastName)
+    public Optional<Author> findAuthorByName(String firstName, String lastName) {
+        return authorJpaRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName)
                 .map(authorMapper::toDomain);
     }
 

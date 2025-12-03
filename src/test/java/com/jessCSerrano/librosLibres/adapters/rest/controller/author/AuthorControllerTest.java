@@ -38,14 +38,14 @@ public class AuthorControllerTest {
 
     @BeforeEach
     void init() {
-        authorGiven = new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
-        authorResponseDtoGiven = new AuthorResponseDto(authorGiven.id(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
+        authorGiven = new Author(UUID.randomUUID(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
+        authorResponseDtoGiven = new AuthorResponseDto(authorGiven.id(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
     }
 
     @Test
     void createAuthorTest() {
         //1- Given
-        AuthorRequestDto authorRequestDtoGiven = new AuthorRequestDto("name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
+        AuthorRequestDto authorRequestDtoGiven = new AuthorRequestDto("firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
 
         Mockito.when(dtoMapper.toDomain(authorRequestDtoGiven)).thenReturn(authorGiven);
         Mockito.when(dtoMapper.toResponseDto(authorGiven)).thenReturn(authorResponseDtoGiven);
@@ -55,7 +55,7 @@ public class AuthorControllerTest {
         ResponseEntity<AuthorResponseDto> authorReturned = authorController.createAuthor(authorRequestDtoGiven);
 
         //3- Assert
-        Assertions.assertEquals(authorReturned.getBody().name(), authorGiven.name());
+        Assertions.assertEquals(authorReturned.getBody().firstName(), authorGiven.firstName());
     }
 
     @Test
@@ -78,8 +78,8 @@ public class AuthorControllerTest {
     @Test
     void updateAuthorTest() {
         //1- Given
-        AuthorRequestDto authorRequestDtoGiven = new AuthorRequestDto("name", "lastName", "nationality2", LocalDate.now(), Genre.FEMALE);
-        AuthorResponseDto authorResponseDtoGiven = new AuthorResponseDto(authorGiven.id(), "name", "lastName", "nationality2", LocalDate.now(), Genre.FEMALE);
+        AuthorRequestDto authorRequestDtoGiven = new AuthorRequestDto("firstName", "lastName", "nationality2", LocalDate.now(), Genre.FEMALE);
+        AuthorResponseDto authorResponseDtoGiven = new AuthorResponseDto(authorGiven.id(), "firstName", "lastName", "nationality2", LocalDate.now(), Genre.FEMALE);
 
 
         Mockito.when(dtoMapper.toResponseDto(authorGiven)).thenReturn(authorResponseDtoGiven);
@@ -90,7 +90,7 @@ public class AuthorControllerTest {
         ResponseEntity<AuthorResponseDto> authorResponseDtoReturned = authorController.updateAuthor(authorGiven.id(), authorRequestDtoGiven);
 
         //3- Assert
-        Assertions.assertEquals(authorResponseDtoReturned.getBody().name(), authorGiven.name());
+        Assertions.assertEquals(authorResponseDtoReturned.getBody().firstName(), authorGiven.firstName());
         Assertions.assertNotEquals(authorResponseDtoReturned.getBody().nationality(), authorGiven.nationality());
     }
 

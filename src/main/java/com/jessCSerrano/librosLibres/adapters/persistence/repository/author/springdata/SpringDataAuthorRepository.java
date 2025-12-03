@@ -13,11 +13,11 @@ import java.util.UUID;
  */
 public interface SpringDataAuthorRepository extends JpaRepository<AuthorEntity, UUID> {
     /**
-     * Search for an author by their first and last name, ignoring upper and lower case letters
+     * Search for an author by their first name and last name, ignoring upper and lower case letters
      *
-     * @param name     the name of the author to search for
-     * @param lastName the last name of the author to search for
+     * @param firstName the first name of the author to search for
+     * @param lastName  the last name of the author to search for
      * @return an Optional containing the AuthorEntity if found, or Optional.empty() otherwise
      */
-    Optional<AuthorEntity> findByNameIgnoreCaseAndLastNameIgnoreCase(String name, String lastName);
+    Optional<AuthorEntity> findByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
 }

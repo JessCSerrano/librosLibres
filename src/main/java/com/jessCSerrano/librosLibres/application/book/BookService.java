@@ -42,7 +42,7 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
             throw new InvalidBookPriceException(INVALID_PRICE);
         }
 
-        Author author = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
+        Author author = authorRepositoryPort.findAuthorByName(book.author().firstName(), book.author().lastName())
                 .orElseGet(() -> authorRepositoryPort.saveAuthor(book.author()));
         Book bookCreated = new Book(
                 book.id(),
@@ -74,10 +74,10 @@ public class BookService implements CreateBookUseCase, DeleteBookUseCase, Update
     public Book updateBook(UUID bookId, Book book) {
         Book existingBook = bookRepositoryPort.findBookById(bookId).orElseThrow(() -> new EntityNotFoundException(EntityNames.BOOK, bookId));
         Author authorToUse;
-        if (book.author() != null && book.author().name() != null && !book.author().name().isBlank() &&
+        if (book.author() != null && book.author().firstName() != null && !book.author().firstName().isBlank() &&
                 book.author().lastName() != null && !book.author().lastName().isBlank()) {
-            authorToUse = authorRepositoryPort.findAuthorByNames(book.author().name(), book.author().lastName())
-                    .orElseThrow(() -> new EntityNotFoundException(book.author().name(), book.author().lastName()));
+            authorToUse = authorRepositoryPort.findAuthorByName(book.author().firstName(), book.author().lastName())
+                    .orElseThrow(() -> new EntityNotFoundException(book.author().firstName(), book.author().lastName()));
         } else {
             authorToUse = existingBook.author();
         }

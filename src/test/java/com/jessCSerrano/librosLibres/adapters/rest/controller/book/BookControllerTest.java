@@ -46,7 +46,7 @@ public class BookControllerTest {
 
     @BeforeEach
     void init() {
-        authorGiven = new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
+        authorGiven = new Author(UUID.randomUUID(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
         bookGiven = new Book(UUID.randomUUID(),
                 authorGiven,
                 "title",
@@ -59,7 +59,7 @@ public class BookControllerTest {
     void createBookTest() {
         //1- Given
         BookRequestDto bookRequestDtoGiven = new BookRequestDto(
-                new AuthorInfoRequest("name", "lastName"),
+                new AuthorInfoRequest("firstName", "lastName"),
                 "title",
                 "publisher",
                 LiteraryGenre.POETRY,
@@ -68,7 +68,7 @@ public class BookControllerTest {
 
         BookResponseDto bookResponseDtoGiven = new BookResponseDto(
                 bookGiven.id(),
-                new AuthorResponseDto(authorGiven.id(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
+                new AuthorResponseDto(authorGiven.id(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
                 "title",
                 "publisher",
                 LiteraryGenre.POETRY,
@@ -84,7 +84,7 @@ public class BookControllerTest {
 
         //3- Assert
         Assertions.assertEquals(bookResponseDtoReturned.getBody().getTitle(), bookGiven.title());
-        Assertions.assertEquals(bookResponseDtoReturned.getBody().getAuthor().name(), bookGiven.author().name());
+        Assertions.assertEquals(bookResponseDtoReturned.getBody().getAuthor().firstName(), bookGiven.author().firstName());
         Assertions.assertEquals(bookResponseDtoReturned.getBody().getPrice(), bookGiven.price());
     }
 
@@ -105,7 +105,7 @@ public class BookControllerTest {
     void updateBookTest() {
         //1-Given
         BookRequestDto bookRequestDtoGiven = new BookRequestDto(
-                new AuthorInfoRequest("name", "lastName"),
+                new AuthorInfoRequest("firstName", "lastName"),
                 "title",
                 "publisher4",
                 LiteraryGenre.POETRY,
@@ -114,7 +114,7 @@ public class BookControllerTest {
 
         BookResponseDto bookResponseDtoGiven = new BookResponseDto(
                 bookGiven.id(),
-                new AuthorResponseDto(authorGiven.id(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
+                new AuthorResponseDto(authorGiven.id(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE),
                 "title",
                 "publisher4",
                 LiteraryGenre.POETRY,
@@ -139,14 +139,14 @@ public class BookControllerTest {
         //1- Given
         BookFilter bookFilterGiven = new BookFilter(
                 BigDecimal.valueOf(30),
-                "name",
+                "firstName",
                 "lastName",
                 "publisher",
                 LiteraryGenre.POETRY
         );
         BookFilterRequestDto bookFilterRequestDtoGiven = new BookFilterRequestDto(
                 BigDecimal.valueOf(30),
-                "name",
+                "firstName",
                 "lastName",
                 "publisher",
                 LiteraryGenre.POETRY
@@ -160,7 +160,7 @@ public class BookControllerTest {
         //2- Act
         ResponseEntity<List<Book>> listBooksReturned = bookController.getBooksByFilter(
                 bookFilterRequestDtoGiven.getMaxPrice(),
-                bookFilterRequestDtoGiven.getAuthorName(),
+                bookFilterRequestDtoGiven.getAuthorFirstName(),
                 bookFilterRequestDtoGiven.getAuthorLastName(),
                 bookFilterRequestDtoGiven.getPublisher(),
                 bookFilterRequestDtoGiven.getLiteraryGenre()

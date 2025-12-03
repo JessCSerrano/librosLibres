@@ -100,11 +100,10 @@ public class AuthorControllerTest {
         Mockito.doNothing().when(authorService).deleteAuthorById(authorGiven.id());
 
         //2- Act
-        authorController.deleteAuthorById(authorGiven.id());
+        ResponseEntity<Void> response = authorController.deleteAuthorById(authorGiven.id());
 
         //Assert
         Mockito.verify(authorService).deleteAuthorById(authorGiven.id());
+        Assertions.assertNull(response.getBody());
     }
-
-
 }

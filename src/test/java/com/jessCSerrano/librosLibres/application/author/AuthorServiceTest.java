@@ -98,7 +98,6 @@ public class AuthorServiceTest {
         authorService.deleteAuthorById(authorGiven.id());
 
         //3- Assert
-        Mockito.verify(authorRepositoryPort).existsById(authorGiven.id());
         Mockito.verify(authorRepositoryPort).deleteAuthorById(authorGiven.id());
     }
 

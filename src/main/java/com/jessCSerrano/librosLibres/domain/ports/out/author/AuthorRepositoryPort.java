@@ -29,11 +29,11 @@ public interface AuthorRepositoryPort {
     List<Author> getAuthors();
 
     /**
-     * Searches for an author by their firstName and last firstName.
+     * Searches for an author by their first name and last name.
      *
-     * @param firstName     the firstName of the author to search for
-     * @param lastName the last firstName of the author to search for
-     * @return an {@link Optional} containing the {@link Author} if found, or an empty {@code Optional} if no author exists with the given firstName and last firstName
+     * @param firstName the first name of the author to search for
+     * @param lastName  the last name of the author to search for
+     * @return an {@link Optional} containing the {@link Author} if found, or an empty {@code Optional} if no author exists with the given first name and last name
      */
     Optional<Author> findAuthorByName(String firstName, String lastName);
 

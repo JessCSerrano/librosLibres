@@ -94,11 +94,11 @@ public class BookController {
     /**
      * Retrieves a list of books that match the specified filter criteria.
      *
-     * @param maxPrice       filter books with a price lower than the given value
-     * @param authorFirstName     filter books written by the specified author (first firstName)
-     * @param authorLastName filter books written by the specified author  (last firstName)
-     * @param publisher      filter books published by the specified publisher
-     * @param literaryGenre  filter books belonging to the specified literary genre
+     * @param maxPrice        filter books with a price lower than the given value
+     * @param authorFirstName filter books written by the specified author (first name)
+     * @param authorLastName  filter books written by the specified author  (last name)
+     * @param publisher       filter books published by the specified publisher
+     * @param literaryGenre   filter books belonging to the specified literary genre
      * @return A list of books that match the given filter parameters
      */
     @Operation(summary = "Retrieve a list of books that match the specified filter criteria")

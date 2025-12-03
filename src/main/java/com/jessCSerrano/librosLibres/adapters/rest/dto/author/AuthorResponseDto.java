@@ -8,6 +8,6 @@ import java.util.UUID;
 /**
  * Data Transfer Object (DTO) with the response author information through the REST API.
  */
-public record AuthorResponseDto(UUID id, String name, String lastName, String nationality, LocalDate dateOfBirth,
+public record AuthorResponseDto(UUID id, String firstName, String lastName, String nationality, LocalDate dateOfBirth,
                                 Genre genre) {
 }

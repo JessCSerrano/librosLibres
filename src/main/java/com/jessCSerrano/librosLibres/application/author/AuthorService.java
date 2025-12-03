@@ -50,7 +50,7 @@ public class AuthorService implements CreateAuthorUseCase, GetAuthorsUseCase, Up
                 .orElseThrow(() -> new EntityNotFoundException(EntityNames.AUTHOR, authorId));
         Author updatedAuthor = new Author(
                 existinAuthor.id(),
-                author.name() != null ? author.name() : existinAuthor.name(),
+                author.firstName() != null ? author.firstName() : existinAuthor.firstName(),
                 author.lastName() != null ? author.lastName() : existinAuthor.lastName(),
                 author.nationality() != null ? author.nationality() : existinAuthor.nationality(),
                 author.dateOfBirth() != null ? author.dateOfBirth() : existinAuthor.dateOfBirth(),

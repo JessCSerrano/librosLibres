@@ -20,12 +20,12 @@ public class EntityNotFoundException extends RuntimeException {
 
     /**
      * Constructs a new EntityNotFoundException with the specified detail message.
-     * Indicating that an author with specified name and last name was not found.
+     * Indicating that an author with specified firstName and last firstName was not found.
      *
-     * @param name     the author's first name that was not found
-     * @param lastName the author's last name that was not found
+     * @param firstName     the author's first firstName that was not found
+     * @param lastName the author's last firstName that was not found
      */
-    public EntityNotFoundException(String name, String lastName) {
-        super(String.format("The author with name %s and last name %s was not found", name, lastName));
+    public EntityNotFoundException(String firstName, String lastName) {
+        super(String.format("The author with firstName %s and last firstName %s was not found", firstName, lastName));
     }
 }

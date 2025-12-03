@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 /**
  * Data Transfer Object (DTO) used to receive author creation data from the client
@@ -15,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorRequestDto {
-    private String name;
+    private String firstName;
     private String lastName;
     private String nationality;
     private LocalDate dateOfBirth;

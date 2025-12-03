@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Data
 public class BookFilterRequestDto {
     private BigDecimal maxPrice;
-    private String authorName;
+    private String authorFirstName;
     private String authorLastName;
     private String publisher;
     private LiteraryGenre literaryGenre;

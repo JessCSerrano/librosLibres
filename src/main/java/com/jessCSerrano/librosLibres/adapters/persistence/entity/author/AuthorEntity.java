@@ -35,7 +35,7 @@ public class AuthorEntity {
     @EqualsAndHashCode.Include
     private UUID id;
     @ToString.Include
-    private String name;
+    private String firstName;
     @ToString.Include
     private String lastName;
     @ToString.Include

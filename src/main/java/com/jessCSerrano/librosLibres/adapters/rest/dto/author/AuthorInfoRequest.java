@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Data Transfer Object (DTO) used to receive the author's first and last names in order to link them to the book created.
+ * Data Transfer Object (DTO) used to receive the author's name in order to link them to the book created.
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class AuthorInfoRequest {
-    private String name;
+    private String firstName;
     private String lastName;
 }

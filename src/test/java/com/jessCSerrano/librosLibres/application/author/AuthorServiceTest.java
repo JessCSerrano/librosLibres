@@ -32,7 +32,7 @@ public class AuthorServiceTest {
 
     @BeforeEach
     void init() {
-        authorGiven = new Author(UUID.randomUUID(), "name", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
+        authorGiven = new Author(UUID.randomUUID(), "firstName", "lastName", "nationality", LocalDate.now(), Genre.FEMALE);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class AuthorServiceTest {
         Author authorReturned = authorService.createAuthor(authorGiven);
 
         //3- Assert
-        Assertions.assertEquals(authorGiven.name(), authorReturned.name());
+        Assertions.assertEquals(authorGiven.firstName(), authorReturned.firstName());
         Assertions.assertEquals(authorGiven.lastName(), authorReturned.lastName());
     }
 
@@ -64,7 +64,7 @@ public class AuthorServiceTest {
     @Test
     void updateExistingAuthorTest() {
         //1- Given
-        Author authorGivenUpdated = new Author(authorGiven.id(), "name2", "lastName2", "nationality", LocalDate.now(), Genre.FEMALE);
+        Author authorGivenUpdated = new Author(authorGiven.id(), "firstName2", "lastName2", "nationality", LocalDate.now(), Genre.FEMALE);
         Mockito.when(authorRepositoryPort.findAuthorById(authorGiven.id())).thenReturn(Optional.ofNullable(authorGiven));
         Mockito.when(authorRepositoryPort.saveAuthor(authorGivenUpdated)).thenReturn(authorGivenUpdated);
 
@@ -72,9 +72,9 @@ public class AuthorServiceTest {
         Author authorReturned = authorService.updateAuthor(authorGiven.id(), authorGivenUpdated);
 
         //3- Assert
-        Assertions.assertEquals(authorGivenUpdated.name(), authorReturned.name());
+        Assertions.assertEquals(authorGivenUpdated.firstName(), authorReturned.firstName());
         Assertions.assertEquals(authorGivenUpdated.lastName(), authorReturned.lastName());
-        Assertions.assertNotEquals(authorGiven.name(), authorReturned.name());
+        Assertions.assertNotEquals(authorGiven.firstName(), authorReturned.firstName());
         Assertions.assertEquals(authorGiven.nationality(), authorReturned.nationality());
     }
 
